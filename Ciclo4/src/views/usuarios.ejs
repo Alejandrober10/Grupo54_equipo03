@@ -20,7 +20,32 @@
                 </thead>
                 <tbody>
                     <% if (arrayUsuarios.length> 0) { %>
-                       
+                        <% arrayUsuarios.forEach(usuario=> { %>
+                            <tr>
+                                <th scope="row" style="visibility:hidden">
+                                    <%= usuario.id %>
+                                </th>
+                                <td>
+                                    <%= usuario.username %>
+                                </td>
+                                <td>
+                                    <%= usuario.nombreU %>
+                                </td>
+                                <td>
+                                    <%= usuario.apellidosU %>
+                                </td>
+                                <td>
+                                    <%= usuario.cedulaU %>
+                                </td>
+                                <td>
+                                    <%= usuario.emailU %>
+                                </td>
+                                <td>
+                                    Botones
+                                </td>
+                            </tr>
+     
+                            <% }) %>
                                 <% } %>     
      
                 </tbody>
