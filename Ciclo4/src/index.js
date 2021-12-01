@@ -74,7 +74,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 //Rutas
 app.use('/', require('./rutas/index'));
 //app.use('/productos', require('./rutas/csv')); //No funciona >:c
-app.use('/usuarios', require('./rutas/usuarios'));
+app.use('/proveedores', require('./rutas/proveedores'));
 
 
 //Empezando el servidor

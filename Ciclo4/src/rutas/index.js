@@ -60,7 +60,7 @@ function isAuthenticated(req, res, next){
 
 router.use((req, res, next) => {
     isAuthenticated(req, res, next);
-    next();
+   // next();
 });
 
 
@@ -148,7 +148,7 @@ router.post('/productos', upload.single('csvProductos'), (req, res, next) =>{
     res.send("Csv subido");
 });
 
-////USUARIOS 
+//////////////////////////////////////USUARIOS 
 
 const User = require('../models/usuarios');
 
@@ -166,33 +166,77 @@ router.get('/usuarios', async (req, res) => {
 }); 
 
 
-/* //Vista de Crear nuevo usuario
+//Vista de Crear nuevo usuario
 router.get('/crearUsuario', (req, res) => {
     res.render('crearUsuario');
 });
  
 //Nuevo usuario
-router.post('/usuariosP', () => {
-    passport.use('local-singup', new LocalStrategy({
-        usernameField: 'username',
-        passwordField: 'password',
-        passReqToCallback: true
-    }, async(req, username, password, done) => {  
-        const existe = await User.findOne({username: username});//Busque si el nombre que ingresan está en la BD
-        const body = req.body;
-        if(existe){
-            return done(null, false, req.flash('singupMessage','El usuario ya existe'));
-        } else{
-            const nuevoUsuario = new User(body);
-            nuevoUsuario.username = username;
-            nuevoUsuario.password = nuevoUsuario.encryptPassword(password);
-            console.log(nuevoUsuario);
-            await nuevoUsuario.save(); //Cuando termine de guardar, continue con la sigu linea
-            done(null, nuevoUsuario);//null para un error y user del usuario que registro
-        }  
-    }));
-}); */
+router.post('/usuariosP', passport.authenticate('local-singup', {
+    successRedirect: "/usuarios",
+    failureRedirect: "/usuarios",
+    passReqToCallback: true
+}));
 
+//Editar usuario
+router.get('/usuarios/:id', async(req, res) => {//capture el id--->ruta/id
+    const id = req.params.id 
+    try{
+        const usuarioBD = await User.findOne({_id: id});
+        console.log(usuarioBD)
+        res.render('detalleUsuario',{
+            usuario: usuarioBD,
+            error:false
+        })
+    }catch(error){
+        res.render('detalleUsuario',{
+        error: true,
+        mensaje: "No se encuentra el id escogido"
+    })
+    };
+});
+
+router.put('/usuarios/:id', async(req, res)=>{
+    const id = req.params.id;
+    const body = req.body
+    try{
+        const usuarioBD = await User.findByIdAndUpdate(id, body, {useFindAndModify: false});
+        console.log(usuarioBD);
+        res.json({
+            estado: true,
+            mensaje: 'Editado'
+        })
+    }catch (error){
+        console.log(error);
+        res.json({
+            estado: false,
+            mensaje: 'No se pudo editar :C'
+        })
+    }
+});
+
+//Eliminar
+router.delete('/usuarios/:id', async (req, res)=>{
+    const id = req.params.id;
+    try{
+        const usuarioDB = await User.findByIdAndDelete({_id: id});
+        if (usuarioDB) {
+            res.json({
+                estado: true,
+                mensaje: 'Eliminado c:'
+            })
+        } else {
+            res.json({
+                estado: false,
+                mensaje: 'No se pudo eliminar :C'
+            })
+        }
+    }catch (error){
+        console.log(error);
+    }
+});
+
+///////////////CLIENTES
 //Para usar las rutas en otros archivos la exportamos
 
 const Cliente = require('../models/cliente');//me traigo el moedlo cliente y lo almaceno
@@ -211,7 +255,7 @@ router.post('/agregarcliente', async (req, res) => { //recibeme los datos del fo
     //console.log(req.body);
     const cliente = new Cliente(req.body);///aqui me almacena en mongodb los datos de mi tabla cliente 
     await cliente.save(); //guardame el objeto
-    res.redirect('/');//llevame a la raiz nuevamente
+    res.redirect('/clientes');//llevame a la raiz nuevamente
     //async y await  me permite no utilizar promesas para los mensajes de error ni acptacion
 });
 
@@ -231,7 +275,7 @@ router.get('/editcliente/:id', async (req, res) => { //recibeme los datos del fo
 router.post('/editcliente/:id', async (req, res) => {
     const { id } = req.params;
     await Cliente.findByIdAndUpdate(id, req.body)
-    res.redirect('/');
+    res.redirect('/clientes');
 
 });
 
@@ -240,8 +284,12 @@ router.post('/editcliente/:id', async (req, res) => {
 router.get('/eliminarcliente/:id', async (req, res) => { //recibeme los datos del formulario
     const { id } = req.params; //nos da los parametros que estamos recibiendo ene ste caso el id para borrar
     await Cliente.remove({ _id: id }); //eliminame el id
-    res.redirect('/');
+    console.log(typeof req.next);
+    res.redirect('/clientes');
 });
+
+
+
 
 module.exports = router;
 

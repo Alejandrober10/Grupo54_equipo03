@@ -1,0 +1,68 @@
+<%- layout('../templates/login.ejs') %>
+<body>
+    <h1 align="center" class="text-dark">Datos Proveedores</h1>
+        <% if (error) { %>
+            <p>
+                <%= mensaje %>
+            </p>
+            <a href="/proveedores" class="btn btn-dark btn-block">
+                Volver al listado
+            </a>
+            <% } %>
+
+                <% if (!error) { %>
+                    <form id="formularioEditar" data-id="<%= proveedor.id %>"> 
+                        <input type="text" class="form-control my-2" name="nit" value="<%= proveedor.nit %>" id="nitInput">
+                        <input type="text" class="form-control my-2" name="nombreP" value="<%= proveedor.nombreP %>" id="nombreInput">
+                        <input type="text" class="form-control my-2" name="direccionP" value="<%= proveedor.direccionP %>" id="dirInput">
+                        <input type="text" class="form-control my-2" name="telefonoP" value="<%= proveedor.telefonoP %>" id="telInput">
+                        <input type="text" class="form-control my-2" name="ciudadP" value="<%= proveedor.ciudadP %>" id="ciudadInput">
+                        <button type="submit" 
+                        class="btn btn-warning btn-block">
+                            Editar proveedor
+                        </button>
+                    </form>
+
+                    <hr>
+                            <button
+                                    class="btn btn-danger btn-sm mt-2"
+                                    id="btnEliminar"
+                                    data-id="<%= proveedor.id %>">
+                                    Eliminar
+                                    </button>
+                    <% } %>
+    </div>
+</body>
+
+<h1 align="center" class="text-dark">Datos Proveedores</h1>
+        <% if (error) { %>
+            <p>
+                <%= mensaje %>
+            </p>
+            <a href="/proveedores" class="btn btn-dark btn-block">
+                Volver al listado
+            </a>
+            <% } %>
+
+                <% if (!error) { %>
+                    <form id="formularioEditar" data-id="<%= proveedor.id %>"> 
+                        <input type="text" class="form-control my-2" name="nit" value="<%= proveedor.nit %>" id="nitInput">
+                        <input type="text" class="form-control my-2" name="nombreP" value="<%= proveedor.nombreP %>" id="nombreInput">
+                        <input type="text" class="form-control my-2" name="direccionP" value="<%= proveedor.direccionP %>" id="dirInput">
+                        <input type="text" class="form-control my-2" name="telefonoP" value="<%= proveedor.telefonoP %>" id="telInput">
+                        <input type="text" class="form-control my-2" name="ciudadP" value="<%= proveedor.ciudadP %>" id="ciudadInput">
+                        <button type="submit" 
+                        class="btn btn-warning btn-block">
+                            Editar proveedor
+                        </button>
+                    </form>
+
+                    <hr>
+                            <button
+                                    class="btn btn-danger btn-sm mt-2"
+                                    id="btnEliminar"
+                                    data-id="<%= proveedor.id %>">
+                                    Eliminar
+                                    </button>
+                    <% } %>
+    </div>
