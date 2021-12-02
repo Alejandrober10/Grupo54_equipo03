@@ -2,52 +2,15 @@
 
     <body>
         <div class="container">
-            <div class="row">
-                <!--formulario-->
-                <div class="col-md-5">
-                    <div class="card">
-                        <div class="card body">
-                            <form action="/agregarcliente" method="post">
-                                <div class="form-group">
-                                    <input type="text" name="cedula" placeholder="inserte el numero de cedula"
-                                        class="form-control">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="nombre" placeholder="cual es tu nombre"
-                                        class="form-control">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="direccion" placeholder="ingresa tu direccion "
-                                        class="form-control">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="telefono" placeholder="inserte el numero de telefono"
-                                        class="form-control">
-
-                                </div>
-                                <div class="form-group">
-                                    <input type="text" name="correo" placeholder="ingresa tu correo "
-                                        class="form-control">
-
-                                </div>
-
-                                <button type="submit" class="btn btn-primary btn-block">
-                                    Agregar
-
-                                </button>
-                            </form>
-
-                        </div>
-                    </div>
-
-                </div>
-
+            <!--div class="row"-->
+                <h1 align="center" class="text-dark" >Datos Clientes</h1>
+                <a class="btn btn-success btn-block my-4"
+                href="/agregarcliente">
+                    Crear nuevo cliente
+                </a>
                 <!--Lista-->
-                <div class="col-md-7">
-                    <table class="table table-bordered table-hover">
+                <!--div class="col-md-7"-->
+                    <table class="table">
                         <thead>
                             <tr>
                                 <th>Numero </th>
@@ -82,10 +45,10 @@
                                         <%= clientes[i].correo%>
                                     </td>
                                     <td>
-                                        <a href="/eliminarcliente/<%= clientes[i]._id%>"
-                                            class="btn btn-danger btn-block">Eliminar</a>
                                         <a href="/editcliente/<%= clientes[i]._id%>"
-                                            class="btn btn-info btn-block">Editar</a>
+                                            class="btn btn-warning btn-block">Editar</a>
+                                        <a href="/eliminarcliente/<%= clientes[i]._id%>"
+                                            class="btn btn-danger btn-block">Eliminar</a>                                        
                                     </td>
                                 </tr>
 
@@ -94,7 +57,7 @@
 
                         </tbody>
                     </table>
-                </div>
+                <!--/div-->
             </div>
-        </div>
+        <!--/div-->
     </body>

@@ -178,7 +178,7 @@ router.post('/usuariosP', passport.authenticate('local-singup', {
     passReqToCallback: true
 }));
 
-//Editar usuario
+/* //Editar usuario
 router.get('/usuarios/:id', async(req, res) => {//capture el id--->ruta/id
     const id = req.params.id 
     try{
@@ -215,6 +215,8 @@ router.put('/usuarios/:id', async(req, res)=>{
     }
 });
 
+
+
 //Eliminar
 router.delete('/usuarios/:id', async (req, res)=>{
     const id = req.params.id;
@@ -234,7 +236,37 @@ router.delete('/usuarios/:id', async (req, res)=>{
     }catch (error){
         console.log(error);
     }
+}); */
+
+
+//para editar 
+
+router.get('/usuarios/:id', async (req, res) => { //recibeme los datos del formulario
+    const { id } = req.params; //nos da los parametros que estamos recibiendo ene ste caso el id para borrar
+    const usuario = await User.findById(id); // buscame el id
+    res.render('detalleUsuario', {
+        usuario
+    });
+
 });
+
+
+router.post('/usuarios/:id', async (req, res) => {
+    const { id } = req.params;
+    await User.findByIdAndUpdate(id, req.body)
+    res.redirect('/usuarios');
+
+});
+
+//para eliminar 
+
+router.get('/eliminarUser/:id', async (req, res) => { //recibeme los datos del formulario
+    const { id } = req.params; //nos da los parametros que estamos recibiendo ene ste caso el id para borrar
+    await User.remove({ _id: id }); //eliminame el id
+    console.log(typeof req.next);
+    res.redirect('/usuarios');
+});
+
 
 ///////////////CLIENTES
 //Para usar las rutas en otros archivos la exportamos
@@ -249,6 +281,9 @@ router.get('/clientes', async (req, res) => { //cuando me pidan una solicitud mu
     }); //traeme el index.ejs
 });
 
+router.get('/agregarcliente', (req, res) => {
+    res.render('crearCliente');
+});
 
 router.post('/agregarcliente', async (req, res) => { //recibeme los datos del formulario
     //console.log(new Cliente(req.body)); //aqui me almacena en mongodb los datos de mi tabla cliente 
